@@ -22,36 +22,21 @@
 #
 ##############################################################################
 
-{
-    'name': 'Sale Minimal Price',
-    'version': '1.0',
-    'category': 'Custom',
-    'description': """Module to block validation of the sale order
-    when price is lower than minimum price
-    """,
-    'author': 'SYLEAM',
-    'website': 'http://www.syleam.fr/',
-    'depends': [
-        'product',
-        'sale',
-    ],
-    'init_xml': [],
-    'images': [],
-    'update_xml': [
-        'security/groups.xml',
-        #'security/ir.model.access.csv',
-        #'view/menu.xml',
-        'view/res_company.xml',
-        'view/sale_order.xml',
-        #'wizard/wizard.xml',
-        #'report/report.xml',
-    ],
-    'demo_xml': [],
-    'test': [],
-    #'external_dependancies': {'python': ['kombu'], 'bin': ['which']},
-    'installable': True,
-    'active': False,
-    'license': 'AGPL-3',
-}
+from osv import osv
+from osv import fields
+
+
+class SaleOrderLine(osv.osv):
+    _inherit = 'sale.order.line'
+
+    _columns = {
+        'block_price': fields.float('Block price', help='The product cannot be sale below this price'),
+    }
+
+    _defaults = {
+         'block_price': lambda *a: 0.0,
+    }
+
+SaleOrderLine()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
