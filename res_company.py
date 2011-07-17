@@ -22,35 +22,28 @@
 #
 ##############################################################################
 
-{
-    'name': 'Sale Minimal Price',
-    'version': '1.0',
-    'category': 'Custom',
-    'description': """Module to block validation of the sale order
-    when price is lower than minimum price
-    """,
-    'author': 'SYLEAM',
-    'website': 'http://www.syleam.fr/',
-    'depends': [
-        'product',
-        'sale',
-    ],
-    'init_xml': [],
-    'images': [],
-    'update_xml': [
-        #'security/groups.xml',
-        #'security/ir.model.access.csv',
-        #'view/menu.xml',
-        'view/res_company.xml',
-        #'wizard/wizard.xml',
-        #'report/report.xml',
-    ],
-    'demo_xml': [],
-    'test': [],
-    #'external_dependancies': {'python': ['kombu'], 'bin': ['which']},
-    'installable': True,
-    'active': False,
-    'license': 'AGPL-3',
-}
+from osv import osv
+from osv import fields
+
+
+class ResCompany(osv.osv):
+    """
+    Add the possibility to block the confirmation of the sale order 
+    when the price unit is lower than the minimum price
+    """
+    _inherit = 'res.company'
+
+    _columns = {
+        'minimum_pricelist_id': fields.many2one('product.pricelist', 'Minimum pricelist', help='This pricelist can compute the minimum price of the product, ' \
+                                                'to block if the unit price on sale order is lower\nIf empty there is no blocking'),
+        'unblock_group_id': fields.many2one('res.groups', 'Unblock group', help='Group to unblock the sale order, if unit price is lower than the minimal price'),
+    }
+
+    _defaults = {
+        'minimum_pricelist_id': lambda *a: False,
+        'unblock_group_id': lambda *a: False,
+    }
+
+ResCompany()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
