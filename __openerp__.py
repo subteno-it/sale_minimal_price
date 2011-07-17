@@ -38,7 +38,7 @@
     'init_xml': [],
     'images': [],
     'update_xml': [
-        #'security/groups.xml',
+        'security/groups.xml',
         #'security/ir.model.access.csv',
         #'view/menu.xml',
         'view/res_company.xml',
