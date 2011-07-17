@@ -25,7 +25,7 @@
         ##############################################################################
 
         <record id="group_sale_minimal_price" model="res.groups">
-            <field name="name">Sale / Minimal Price</field>
+            <field name="name">Sales / Minimal Price</field>
         </record>
 
     </data>
