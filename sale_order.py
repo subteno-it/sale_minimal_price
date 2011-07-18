@@ -27,6 +27,26 @@ from osv import fields
 from tools.translate import _
 
 
+class SaleOrder(osv.osv):
+    _inherit = 'sale.order'
+
+    def action_wait(self, cr, uid, ids, context=None):
+        """
+        Check
+        """
+        user = self.pool.get('res.users').browse(cr, uid, uid)
+        have_group = user.company_id.unblock_group_id.id in [z.id for z in user.groups_id]
+        for so in self.browse(cr, uid, ids):
+
+            if not have_group and [x.id for x in so.order_line if x.price_unit < x.block_price]:
+                raise osv.except_osv(_('Validation Error'),
+                                     _('You cannot validate the sale order, some lines have a unit price lower than minimal price'))
+
+        return super(SaleOrder, self).action_wait(cr, uid, ids, context)
+
+SaleOrder()
+
+
 class SaleOrderLine(osv.osv):
     _inherit = 'sale.order.line'
 
