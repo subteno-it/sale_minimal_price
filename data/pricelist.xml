@@ -45,7 +45,7 @@
         <record id="pricelist_item_global" model="product.pricelist.item">
             <field name="name">Default item pricelist global</field>
             <field name="min_quantity" eval="0"/>
-            <field name="base" ref="product.pricelist_type_sale"/>
+            <field name="base" ref="product.standard_price"/>
             <field name="price_version_id" ref="pricelist_version_global"/>
         </record>
 
