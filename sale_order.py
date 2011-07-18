@@ -63,8 +63,7 @@ class SaleOrderLine(osv.osv):
                     warning = {
                         'title': _('No valid minimal pricelist line found !'),
                         'message':
-                            _("Couldn't find a pricelist line matching this product and quantity.\n" \
-                              "You have to change either the product, the quantity or the pricelist.")
+                            _("Couldn't find a pricelist line matching this product and quantity.\nYou have to change either the product, the quantity or the pricelist.")
                     }
 
                 res['value']['block_price'] = price or 0.0
@@ -72,8 +71,7 @@ class SaleOrderLine(osv.osv):
                     warning = {
                         'title': _('The unit price is lower than the price unit'),
                         'message':
-                            _("You have a price unit lower than the minimal\n" \
-                              "You cannot confirm your sale order, please ask to your manager to do it.")
+                            _("You have a price unit lower than the minimal\nYou cannot confirm your sale order, please ask to your manager to do it.")
                     }
 
                 res['warning'] = warning
@@ -91,8 +89,7 @@ class SaleOrderLine(osv.osv):
             return {'warning': {
                 'title': _('The unit price is lower than the price unit'),
                 'message':
-                    _("You have a price unit lower than the minimal\n" \
-                      "You cannot confirm your sale order, please ask to your manager to do it.")
+                    _("You have a price unit lower than the minimal\nYou cannot confirm your sale order, please ask to your manager to do it.")
             }}
         return {}
 
