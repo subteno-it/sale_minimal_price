@@ -32,12 +32,12 @@ class SaleOrder(osv.osv):
 
     def action_wait(self, cr, uid, ids, context=None):
         """
-        Check
+        Check if price unit for each lines is lower than block price
+        if True and user not in the group on company, raise an error
         """
         user = self.pool.get('res.users').browse(cr, uid, uid)
         have_group = user.company_id.unblock_group_id.id in [z.id for z in user.groups_id]
         for so in self.browse(cr, uid, ids):
-
             if not have_group and [x.id for x in so.order_line if x.price_unit < x.block_price]:
                 raise osv.except_osv(_('Validation Error'),
                                      _('You cannot validate the sale order, some lines have a unit price lower than minimal price'))
