@@ -86,7 +86,7 @@ class SaleOrderLine(osv.osv):
         """
         print 'price_unit_change'
 
-        if price_unit < block_price:
+        if price_unit and block_price and (price_unit < block_price):
             context = self.pool.get('res.users').context_get(cr, uid)
             return {'warning': {
                 'title': _('The unit price is lower than the price unit'),
