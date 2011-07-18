@@ -45,6 +45,7 @@
         'view/sale_order.xml',
         #'wizard/wizard.xml',
         #'report/report.xml',
+        'data/pricelist.xml',
     ],
     'demo_xml': [],
     'test': [],

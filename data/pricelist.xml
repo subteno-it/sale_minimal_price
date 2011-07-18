@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="1">
+        ##############################################################################
+        #
+        #    sale_minimal_price module for OpenERP, Module to block validation of the sale order
+        #    Copyright (C) 2011 SYLEAM ([http://www.syleam.fr/])
+        #              Christophe CHAUVET [christophe.chauvet@syleam.fr]
+        #
+        #    This file is a part of sale_minimal_price
+        #
+        #    sale_minimal_price is free software: you can redistribute it and/or modify
+        #    it under the terms of the GNU Affero General Public License as published by
+        #    the Free Software Foundation, either version 3 of the License, or
+        #    (at your option) any later version.
+        #
+        #    sale_minimal_price is distributed in the hope that it will be useful,
+        #    but WITHOUT ANY WARRANTY; without even the implied warranty of
+        #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+        #    GNU Affero General Public License for more details.
+        #
+        #    You should have received a copy of the GNU Affero General Public License
+        #    along with this program.  If not, see [http://www.gnu.org/licenses/].
+        #
+        ##############################################################################
+
+        <record id="type_minimal" model="product.pricelist.type">
+            <field name="name">Minimal price</field>
+            <field name="key">minimal</field>
+        </record>
+
+        <record id="pricelist_global" model="product.pricelist">
+            <field name="name">Minimal pricelist global</field>
+            <field name="active" eval="True"/>
+            <field name="type">minimal</field>
+            <field name="currency_id" ref="base.EUR"/>
+        </record>
+
+        <record id="pricelist_version_global" model="product.pricelist.version">
+            <field name="name">Default minimal pricelist version</field>
+            <field name="active" eval="True"/>
+            <field name="pricelist_id" ref="pricelist_global"/>
+        </record>
+
+        <record id="pricelist_item_global" model="product.pricelist.item">
+            <field name="name">Default item pricelist global</field>
+            <field name="min_quantity" eval="0"/>
+            <field name="base" ref="product.pricelist_type_sale"/>
+            <field name="price_version_id" ref="pricelist_version_global"/>
+        </record>
+
+    </data>
+</openerp>
