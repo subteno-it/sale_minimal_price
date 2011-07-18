@@ -33,9 +33,14 @@
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
 
-                <xpath expr="//field[@name='delay']" position="after">
-                    <field name="block_price" groups="sale_minimal_price.group_sale_minimal_price"/>
-                </xpath>
+                <data>
+                    <xpath expr="//field[@name='delay']" position="after">
+                        <field name="block_price" groups="sale_minimal_price.group_sale_minimal_price"/>
+                    </xpath>
+                    <xpath expr="//field[@name='price_unit']" position="attributes">
+                        <attribute name="on_change">onchange_price_unit(price_unit, block_price)</attribute>
+                    </xpath>
+                </data>
 
             </field>
         </record>

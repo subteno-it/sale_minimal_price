@@ -70,15 +70,31 @@ class SaleOrderLine(osv.osv):
                 res['value']['block_price'] = price or 0.0
                 if price > res['value']['price_unit']:
                     warning = {
-                        'title': _('The unit price is lowest than the price unit'),
+                        'title': _('The unit price is lower than the price unit'),
                         'message':
-                            _("You have a price unit lowest than the minimal\n" \
+                            _("You have a price unit lower than the minimal\n" \
                               "You cannot confirm your sale order, please ask to your manager to do it.")
                     }
 
                 res['warning'] = warning
 
         return res
+
+    def onchange_price_unit(self, cr, uid, ids, price_unit, block_price):
+        """
+        If price unit is lower than block price, send a warning
+        """
+        print 'price_unit_change'
+
+        if price_unit < block_price:
+            context = self.pool.get('res.users').context_get(cr, uid)
+            return {'warning': {
+                'title': _('The unit price is lower than the price unit'),
+                'message':
+                    _("You have a price unit lower than the minimal\n" \
+                      "You cannot confirm your sale order, please ask to your manager to do it.")
+            }}
+        return {}
 
 SaleOrderLine()
 
