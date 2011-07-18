@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2011-07-18 08:24+0000\n"
+"POT-Creation-Date: 2011-07-18 20:16+0000\n"
 "PO-Revision-Date: 2011-07-18 10:31+0100\n"
 "Last-Translator: Christophe Chauvet <christophe.chauvet@syleam.fr>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,7 +22,9 @@ msgstr "Groupe de déblocage"
 #. module: sale_minimal_price
 #: help:res.company,unblock_group_id:0
 msgid "Group to unblock the sale order, if unit price is lower than the minimal price"
-msgstr "Groupe pour débloquer la commande, si le prix unitaire est inférieur au prix minimum"
+msgstr ""
+"Groupe pour débloquer la commande, si le prix unitaire est inférieur au prix "
+"minimum"
 
 #. module: sale_minimal_price
 #: model:product.pricelist,name:sale_minimal_price.pricelist_global
@@ -31,11 +33,11 @@ msgstr "Liste de prix planché par défaut"
 
 #. module: sale_minimal_price
 #: help:res.company,minimum_pricelist_id:0
-msgid ""
-"This pricelist can compute the minimum price of the product, to block if the unit price on sale order is lower\n"
+msgid "This pricelist can compute the minimum price of the product, to block if the unit price on sale order is lower\n"
 "If empty there is no blocking"
 msgstr ""
-"Cette liste de prix peut calculer le prix planché du produit, pour bloquer si le prix unitaire sur la commande est inférieur\n"
+"Cette liste de prix peut calculer le prix planché du produit, pour bloquer "
+"si le prix unitaire sur la commande est inférieur\n"
 "Si vide il n'y pas de blocage"
 
 #. module: sale_minimal_price
@@ -50,8 +52,7 @@ msgstr "Sociétés"
 
 #. module: sale_minimal_price
 #: model:ir.module.module,description:sale_minimal_price.module_meta_information
-msgid ""
-"Module to block validation of the sale order\n"
+msgid "Module to block validation of the sale order\n"
 "    when price is lower than minimum price\n"
 "    "
 msgstr ""
@@ -98,4 +99,3 @@ msgstr "Ligne de commande"
 #: model:product.pricelist.type,name:sale_minimal_price.type_minimal
 msgid "Minimal price"
 msgstr "Prix planché"
-
