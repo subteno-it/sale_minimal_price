@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.2\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2011-07-18 20:16+0000\n"
-"PO-Revision-Date: 2011-07-18 20:16+0000\n"
+"POT-Creation-Date: 2011-07-18 21:03+0000\n"
+"PO-Revision-Date: 2011-07-18 21:03+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -69,6 +69,11 @@ msgid "Block price"
 msgstr ""
 
 #. module: sale_minimal_price
+#: sql_constraint:sale.order:0
+msgid "Order Reference must be unique !"
+msgstr ""
+
+#. module: sale_minimal_price
 #: model:product.pricelist.version,name:sale_minimal_price.pricelist_version_global
 msgid "Default minimal pricelist version"
 msgstr ""
@@ -76,6 +81,11 @@ msgstr ""
 #. module: sale_minimal_price
 #: help:sale.order.line,block_price:0
 msgid "The product cannot be sale below this price"
+msgstr ""
+
+#. module: sale_minimal_price
+#: model:ir.model,name:sale_minimal_price.model_sale_order
+msgid "Sales Order"
 msgstr ""
 
 #. module: sale_minimal_price

@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2011-07-18 20:16+0000\n"
-"PO-Revision-Date: 2011-07-18 10:31+0100\n"
+"POT-Creation-Date: 2011-07-18 21:03+0000\n"
+"PO-Revision-Date: 2011-07-18 23:01+0100\n"
 "Last-Translator: Christophe Chauvet <christophe.chauvet@syleam.fr>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -76,6 +76,11 @@ msgid "Block price"
 msgstr "Prix planché"
 
 #. module: sale_minimal_price
+#: sql_constraint:sale.order:0
+msgid "Order Reference must be unique !"
+msgstr "La référence de commande doit être unique !"
+
+#. module: sale_minimal_price
 #: model:product.pricelist.version,name:sale_minimal_price.pricelist_version_global
 msgid "Default minimal pricelist version"
 msgstr "Version de la liste de prix par défaut"
@@ -84,6 +89,11 @@ msgstr "Version de la liste de prix par défaut"
 #: help:sale.order.line,block_price:0
 msgid "The product cannot be sale below this price"
 msgstr "Le produit ne peux pas être vendu en dessous de ce prix"
+
+#. module: sale_minimal_price
+#: model:ir.model,name:sale_minimal_price.model_sale_order
+msgid "Sales Order"
+msgstr "Commandes de vente"
 
 #. module: sale_minimal_price
 #: view:res.company:0
