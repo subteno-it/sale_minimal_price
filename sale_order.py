@@ -24,6 +24,7 @@
 
 from osv import osv
 from osv import fields
+from tools.translate import _
 
 
 class SaleOrderLine(osv.osv):
@@ -36,6 +37,48 @@ class SaleOrderLine(osv.osv):
     _defaults = {
          'block_price': lambda *a: 0.0,
     }
+
+    def product_id_change(self, cr, uid, ids, pricelist, product, qty=0,
+            uom=False, qty_uos=0, uos=False, name='', partner_id=False,
+            lang=False, update_tax=True, date_order=False, packaging=False, fiscal_position=False, flag=False):
+        """
+        This function compute the minimal price, with the pricelist define on the company
+        """
+        res = super(SaleOrderLine, self).product_id_change(cr, uid, ids, pricelist, product, qty,
+            uom, qty_uos, uos, name, partner_id, lang, update_tax, date_order, packaging, fiscal_position, flag)
+
+        if product:
+            context = self.pool.get('res.users').context_get(cr, uid)
+            cny = self.pool.get('res.users').browse(cr, uid, uid).company_id
+            if cny.minimum_pricelist_id:
+                extra = {
+                    'uom': uom,
+                    'date': date_order,
+                }
+                price = self.pool.get('product.pricelist').price_get(cr, uid, [cny.minimum_pricelist_id.id],
+                            product, qty or 1.0, partner_id, extra)[cny.minimum_pricelist_id.id]
+
+                warning = res['warning']
+                if price is False:
+                    warning = {
+                        'title': _('No valid minimal pricelist line found !'),
+                        'message':
+                            _("Couldn't find a pricelist line matching this product and quantity.\n" \
+                              "You have to change either the product, the quantity or the pricelist.")
+                    }
+
+                res['value']['block_price'] = price or 0.0
+                if price > res['value']['price_unit']:
+                    warning = {
+                        'title': _('The unit price is lowest than the price unit'),
+                        'message':
+                            _("You have a price unit lowest than the minimal\n" \
+                              "You cannot confirm your sale order, please ask to your manager to do it.")
+                    }
+
+                res['warning'] = warning
+
+        return res
 
 SaleOrderLine()
 

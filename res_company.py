@@ -28,7 +28,7 @@ from osv import fields
 
 class ResCompany(osv.osv):
     """
-    Add the possibility to block the confirmation of the sale order 
+    Add the possibility to block the confirmation of the sale order
     when the price unit is lower than the minimum price
     """
     _inherit = 'res.company'
