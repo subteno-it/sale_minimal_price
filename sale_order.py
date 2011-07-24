@@ -25,6 +25,9 @@
 from osv import osv
 from osv import fields
 from tools.translate import _
+import logging
+
+_logger = logging.getLogger('sale_minimal_price')
 
 
 class SaleOrder(osv.osv):
@@ -90,6 +93,7 @@ class SaleOrderLine(osv.osv):
                     }
 
                 res['value']['block_price'] = price or 0.0
+                _logger.debug('Price unit: %f, Block price: %f' % (res['value']['price_unit'], res['value']['block_price']))
                 if price > res['value']['price_unit']:
                     warning = {
                         'title': _('The unit price is lower than the price unit'),
@@ -105,9 +109,9 @@ class SaleOrderLine(osv.osv):
         """
         If price unit is lower than block price, send a warning
         """
-        print 'price_unit_change'
 
         if price_unit and block_price and (price_unit < block_price):
+            _logger.debug('Price unit: %f, Block price: %f' % (price_unit, block_price))
             context = self.pool.get('res.users').context_get(cr, uid)
             return {'warning': {
                 'title': _('The unit price is lower than the price unit'),
