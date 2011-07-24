@@ -35,12 +35,15 @@ class SaleOrder(osv.osv):
         Check if price unit for each lines is lower than block price
         if True and user not in the group on company, raise an error
         """
+        if context is None:
+            context = self.pool.get('res.users').context_get(cr, uid)
+
         user = self.pool.get('res.users').browse(cr, uid, uid)
         have_group = user.company_id.unblock_group_id.id in [z.id for z in user.groups_id]
         for so in self.browse(cr, uid, ids):
             if not have_group and [x.id for x in so.order_line if x.price_unit < x.block_price]:
                 raise osv.except_osv(_('Validation Error'),
-                                     _('You cannot validate the sale order, some lines have a unit price lower than minimal price'))
+                    _('You cannot validate the sale order, some lines have a unit price lower than minimal price'))
 
         return super(SaleOrder, self).action_wait(cr, uid, ids, context)
 
@@ -109,7 +112,7 @@ class SaleOrderLine(osv.osv):
             return {'warning': {
                 'title': _('The unit price is lower than the price unit'),
                 'message':
-                    _("You have a price unit lower than the minimal\nYou cannot confirm your sale order, please ask to your manager to do it.")
+                    _('You have a price unit lower than the minimal\nYou cannot confirm your sale order, please ask to your manager to do it.')
             }}
         return {}
 
