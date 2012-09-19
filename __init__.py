@@ -22,9 +22,7 @@
 #
 ##############################################################################
 
-import res_company
-import sale_order
-import report
-import wizard
+import base
+import sale
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

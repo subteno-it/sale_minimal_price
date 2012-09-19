@@ -4,6 +4,7 @@
 #    sale_minimal_price module for OpenERP, Module to block validation of the sale order
 #    Copyright (C) 2011 SYLEAM (<http://www.syleam.fr/>)
 #              Christophe CHAUVET <christophe.chauvet@syleam.fr>
+#              Sébastien LANGE <sebastien.lange@syleam.fr>
 #
 #    This file is a part of sale_minimal_price
 #
@@ -22,6 +23,28 @@
 #
 ##############################################################################
 
+from osv import osv
+from osv import fields
 
+
+class res_company(osv.osv):
+    """
+    Add the possibility to block the confirmation of the sale order
+    when the price unit is lower than the minimum price
+    """
+    _inherit = 'res.company'
+
+    _columns = {
+        'minimum_pricelist_id': fields.many2one('product.pricelist', 'Minimum pricelist', help='This pricelist can compute the minimum price of the product, ' \
+                                                'to block if the unit price on sale order is lower\nIf empty there is no blocking'),
+        'unblock_group_id': fields.many2one('res.groups', 'Unblock group', help='Group to unblock the sale order, if unit price is lower than the minimal price'),
+    }
+
+    _defaults = {
+        'minimum_pricelist_id': lambda *a: False,
+        'unblock_group_id': lambda *a: False,
+    }
+
+res_company()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

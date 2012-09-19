@@ -4,6 +4,7 @@
 #    sale_minimal_price module for OpenERP, Module to block validation of the sale order
 #    Copyright (C) 2011 SYLEAM (<http://www.syleam.fr/>)
 #              Christophe CHAUVET <christophe.chauvet@syleam.fr>
+#              Sébastien LANGE <sebastien.lange@syleam.fr>
 #
 #    This file is a part of sale_minimal_price
 #
@@ -39,13 +40,9 @@
     'images': [],
     'update_xml': [
         'security/groups.xml',
-        #'security/ir.model.access.csv',
-        #'view/menu.xml',
-        'view/res_company.xml',
-        'view/sale_order.xml',
-        #'wizard/wizard.xml',
-        #'report/report.xml',
-        'data/pricelist.xml',
+        'base_view.xml',
+        'sale_view.xml',
+        'product_data.xml',
     ],
     'demo_xml': [],
     'test': [],

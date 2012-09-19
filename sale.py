@@ -30,7 +30,7 @@ import logging
 _logger = logging.getLogger('sale_minimal_price')
 
 
-class SaleOrder(osv.osv):
+class sale_order(osv.osv):
     _inherit = 'sale.order'
 
     def action_wait(self, cr, uid, ids, context=None):
@@ -48,12 +48,12 @@ class SaleOrder(osv.osv):
                 raise osv.except_osv(_('Validation Error'),
                     _('You cannot validate the sale order, some lines have a unit price lower than minimal price'))
 
-        return super(SaleOrder, self).action_wait(cr, uid, ids, context)
+        return super(sale_order, self).action_wait(cr, uid, ids, context)
 
-SaleOrder()
+sale_order()
 
 
-class SaleOrderLine(osv.osv):
+class sale_order_line(osv.osv):
     _inherit = 'sale.order.line'
 
     _columns = {
@@ -70,7 +70,7 @@ class SaleOrderLine(osv.osv):
         """
         This function compute the minimal price, with the pricelist define on the company
         """
-        res = super(SaleOrderLine, self).product_id_change(cr, uid, ids, pricelist, product, qty,
+        res = super(sale_order_line, self).product_id_change(cr, uid, ids, pricelist, product, qty,
             uom, qty_uos, uos, name, partner_id, lang, update_tax, date_order, packaging, fiscal_position, flag)
 
         if product:
@@ -109,7 +109,6 @@ class SaleOrderLine(osv.osv):
         """
         If price unit is lower than block price, send a warning
         """
-
         if price_unit and block_price and (price_unit < block_price):
             _logger.debug('Price unit: %f, Block price: %f' % (price_unit, block_price))
             context = self.pool.get('res.users').context_get(cr, uid)
@@ -120,6 +119,6 @@ class SaleOrderLine(osv.osv):
             }}
         return {}
 
-SaleOrderLine()
+sale_order_line()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

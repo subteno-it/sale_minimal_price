@@ -6,6 +6,7 @@
         #    sale_minimal_price module for OpenERP, Module to block validation of the sale order
         #    Copyright (C) 2011 SYLEAM ([http://www.syleam.fr/])
         #              Christophe CHAUVET [christophe.chauvet@syleam.fr]
+        #              Sebastien LANGE [sebastien.lange@syleam.fr]
         #
         #    This file is a part of sale_minimal_price
         #
@@ -31,13 +32,11 @@
             <field name="priority" eval="26"/>
             <field name="inherit_id" ref="base.view_company_form"/>
             <field name="arch" type="xml">
-
                 <xpath expr="//page[@string='Configuration']" position="inside">
                     <separator string="Minimum price rules" colspan="4"/>
                     <field name="minimum_pricelist_id" />
                     <field name="unblock_group_id"/>
                 </xpath>
-
             </field>
         </record>
 
