@@ -4,6 +4,7 @@
 #    sale_minimal_price module for OpenERP, Module to block validation of the sale order
 #    Copyright (C) 2011 SYLEAM (<http://www.syleam.fr/>)
 #              Christophe CHAUVET <christophe.chauvet@syleam.fr>
+#              Sebastien LANGE <sebastien.lange@syleam.fr>
 #
 #    This file is a part of sale_minimal_price
 #
@@ -46,7 +47,7 @@ class sale_order(osv.osv):
         for so in self.browse(cr, uid, ids):
             if not have_group and [x.id for x in so.order_line if x.price_unit < x.block_price]:
                 raise osv.except_osv(_('Validation Error'),
-                    _('You cannot validate the sale order, some lines have a unit price lower than minimal price'))
+                                     _('You cannot validate the sale order, some lines have a unit price lower than minimal price'))
 
         return super(sale_order, self).action_wait(cr, uid, ids, context)
 
@@ -61,17 +62,17 @@ class sale_order_line(osv.osv):
     }
 
     _defaults = {
-         'block_price': lambda *a: 0.0,
+        'block_price': lambda *a: 0.0,
     }
 
     def product_id_change(self, cr, uid, ids, pricelist, product, qty=0,
-            uom=False, qty_uos=0, uos=False, name='', partner_id=False,
-            lang=False, update_tax=True, date_order=False, packaging=False, fiscal_position=False, flag=False):
+                          uom=False, qty_uos=0, uos=False, name='', partner_id=False,
+                          lang=False, update_tax=True, date_order=False, packaging=False, fiscal_position=False, flag=False):
         """
         This function compute the minimal price, with the pricelist define on the company
         """
         res = super(sale_order_line, self).product_id_change(cr, uid, ids, pricelist, product, qty,
-            uom, qty_uos, uos, name, partner_id, lang, update_tax, date_order, packaging, fiscal_position, flag)
+                                                             uom, qty_uos, uos, name, partner_id, lang, update_tax, date_order, packaging, fiscal_position, flag)
 
         if product:
             context = self.pool.get('res.users').context_get(cr, uid)
@@ -82,14 +83,14 @@ class sale_order_line(osv.osv):
                     'date': date_order,
                 }
                 price = self.pool.get('product.pricelist').price_get(cr, uid, [cny.minimum_pricelist_id.id],
-                            product, qty or 1.0, partner_id, extra)[cny.minimum_pricelist_id.id]
+                                                                     product, qty or 1.0, partner_id, extra)[cny.minimum_pricelist_id.id]
 
                 warning = res['warning']
                 if price is False:
                     warning = {
                         'title': _('No valid minimal pricelist line found !'),
                         'message':
-                            _("Couldn't find a pricelist line matching this product and quantity.\nYou have to change either the product, the quantity or the pricelist.")
+                        _("Couldn't find a pricelist line matching this product and quantity.\nYou have to change either the product, the quantity or the pricelist.")
                     }
 
                 res['value']['block_price'] = price or 0.0
@@ -98,7 +99,7 @@ class sale_order_line(osv.osv):
                     warning = {
                         'title': _('The unit price is lower than the price unit'),
                         'message':
-                            _("You have a price unit lower than the minimal\nYou cannot confirm your sale order, please ask to your manager to do it.")
+                        _("You have a price unit lower than the minimal\nYou cannot confirm your sale order, please ask to your manager to do it.")
                     }
 
                 res['warning'] = warning
@@ -112,11 +113,13 @@ class sale_order_line(osv.osv):
         if price_unit and block_price and (price_unit < block_price):
             _logger.debug('Price unit: %f, Block price: %f' % (price_unit, block_price))
             context = self.pool.get('res.users').context_get(cr, uid)
-            return {'warning': {
-                'title': _('The unit price is lower than the price unit'),
-                'message':
+            return {
+                'warning': {
+                    'title': _('The unit price is lower than the price unit'),
+                    'message':
                     _('You have a price unit lower than the minimal\nYou cannot confirm your sale order, please ask to your manager to do it.')
-            }}
+                }
+            }
         return {}
 
 sale_order_line()
