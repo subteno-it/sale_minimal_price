@@ -66,16 +66,17 @@ class sale_order_line(osv.osv):
     }
 
     def product_id_change(self, cr, uid, ids, pricelist, product, qty=0,
-                          uom=False, qty_uos=0, uos=False, name='', partner_id=False,
-                          lang=False, update_tax=True, date_order=False, packaging=False, fiscal_position=False, flag=False):
+            uom=False, qty_uos=0, uos=False, name='', partner_id=False,
+            lang=False, update_tax=True, date_order=False, packaging=False, fiscal_position=False, flag=False, context=None):
         """
         This function compute the minimal price, with the pricelist define on the company
         """
-        res = super(sale_order_line, self).product_id_change(cr, uid, ids, pricelist, product, qty,
-                                                             uom, qty_uos, uos, name, partner_id, lang, update_tax, date_order, packaging, fiscal_position, flag)
+        res =  super(sale_order_line, self).product_id_change(
+            cr, uid, ids, pricelist, product, qty,
+            uom, qty_uos, uos, name, partner_id,
+            lang, update_tax, date_order, packaging, fiscal_position, flag, context=context)
 
         if product:
-            context = self.pool.get('res.users').context_get(cr, uid)
             cny = self.pool.get('res.users').browse(cr, uid, uid).company_id
             if cny.minimum_pricelist_id:
                 extra = {
