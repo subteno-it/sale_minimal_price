@@ -26,7 +26,7 @@
 {
     'name': 'Sale Minimal Price',
     'version': '1.1',
-    'category': 'Custom',
+    'category': 'Sales Management',
     'description': """Module to block validation of the sale order
     when price is lower than minimum price
     """,
